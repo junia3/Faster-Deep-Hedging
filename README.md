@@ -1,8 +1,7 @@
 # Faster-Deep-Hedging
 Faster optimization for Asian option Deep Hedging
 
-This is the source code for the paper 'Faster optimization for Asian option Deep Hedging' which I wrote as final report in fiance engineering class.
-The contents is about Asian option pricing with deep hedging mechanism.
+This is the source code for the paper 'Faster optimization for Asian option Deep Hedging'
 
 ---
 
@@ -99,3 +98,6 @@ def evaluate_with_dataloader(model, dataloader):
 ```
 
 Plot result graph in histogram type and distribution type.
+
+
+--> To be updated later..
