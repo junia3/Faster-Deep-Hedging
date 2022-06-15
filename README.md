@@ -97,5 +97,84 @@ def evaluate_with_dataloader(model, dataloader):
 
 Plot result graph in histogram type and distribution type.
 
+---
 
---> To be updated later..
+## Train and evaluate SLP(Simle MLP(Multilayer perceptron))
+
+From this paper, I proved that simple networks can learn efficiently with price difference learning. The training code of SLP is written on run.py as example function. Example code is following.
+
+```python
+def example():
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    result = pd.DataFrame()
+    # You can change parameters
+    r = 0.02
+    sig = 0.2
+    T = 100 / 365
+    N = 500
+    K_val = 100
+
+    print('Generating datasets ...')
+    # generate dataset, dataloder
+    args = [r, sig, T, N]
+    train_dataloader, val_dataloader = generate_data(args, 256, K_val=K_val)
+
+    print('Instantiate model')
+    # instantiate model to train and test
+    model = DeltaNet(N)         # 'DeltaNet', 'ConvDeltaNet'
+    MODEL_NAME = 'SLP'          # 'SLP', 'SCNN'
+    input_shape = (256, N)      # '(256, N), '256, 1, N'
+    torchsummary.summary(model, input_shape, device=str(device))
+
+    print('Start training ...')
+    model, _ = train_network(model, train_dataloader, 100, device)
+
+    print('Evaluation ...')
+    result = eval_network(model, MODEL_NAME, val_dataloader, result, K_val, device)
+
+    print(result)
+
+if __name__ == '__main__':
+    example()    
+```
+Or you can just use example code in colab(jupyter notebook) file.
+
+---
+
+## Train and evaluate SCNN(Simple convolutional neural network)
+
+```python
+def example():
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    result = pd.DataFrame()
+    # You can change parameters
+    r = 0.02
+    sig = 0.2
+    T = 100 / 365
+    N = 500
+    K_val = 100
+
+    print('Generating datasets ...')
+    # generate dataset, dataloder
+    args = [r, sig, T, N]
+    train_dataloader, val_dataloader = generate_data(args, 256, K_val=K_val)
+
+    print('Instantiate model')
+    # instantiate model to train and test
+    model = ConvDeltaNet(N)         # 'DeltaNet', 'ConvDeltaNet'
+    MODEL_NAME = 'SCNN'             # 'SLP', 'SCNN'
+    input_shape = (256, 1, N)       # '(256, N), '(256, 1, N)'
+    torchsummary.summary(model, input_shape, device=str(device))
+
+    print('Start training ...')
+    model, _ = train_network(model, train_dataloader, 100, device)
+
+    print('Evaluation ...')
+    result = eval_network(model, MODEL_NAME, val_dataloader, result, K_val, device)
+
+    print(result)
+
+if __name__ == '__main__':
+    example()
+```
+
