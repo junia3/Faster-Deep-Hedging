@@ -1,8 +1,6 @@
 # Faster-Deep-Hedging
 Faster optimization for Asian option Deep Hedging
 
-This is the source code for the paper 'Faster optimization for Asian option Deep Hedging'  
-
 To begin with, there is a jupyter notebook code, so you just can open it and copy.
 ```python
 import numpy as np
